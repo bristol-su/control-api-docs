@@ -1,0 +1,21 @@
+name: Npm build and commit updated js
+
+on: [push]
+
+jobs:
+  grunt-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Compile with npm
+      uses: elstudio/actions-js-build/build@v2
+      with:
+        wdPath: './web/themes/nw8'
+
+    - name: Commit changes
+      uses: elstudio/actions-js-build/commit@v3
+      with:
+        commitMessage: Regenerate css 
