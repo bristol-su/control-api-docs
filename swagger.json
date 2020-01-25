@@ -1,7 +1,10 @@
 openapi: 3.0.0
+tags:
+  - name: Group
+    description: Endpoints related to managing groups
 info:
   title: Control
-  version: '1.0'
+  version: '1.0.2'
   description: 'API for managing groups, users, roles, positions, tags and related data.'
   contact:
     name: Toby Twigger
@@ -20,8 +23,6 @@ paths:
         description: ID of the group
     get:
       summary: Get information about a single group
-      tags:
-        - Group
       responses:
         '200':
           description: OK
@@ -38,6 +39,99 @@ paths:
       security:
         - OAuth2: []
       description: Get information about a single group by ID
+      tags:
+        - Group
+    patch:
+      summary: Update a group
+      operationId: patch-group-group_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+      description: Update a group
+      security:
+        - OAuth2: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the group
+                email:
+                  type: string
+                  description: Email of the group
+      tags:
+        - Group
+    delete:
+      summary: Delete a group
+      responses:
+        '200':
+          description: OK
+      operationId: delete-group
+      description: Delete a group
+      security:
+        - OAuth2: []
+      tags:
+        - Group
+  /group:
+    post:
+      summary: Create a new Group
+      tags:
+        - Group
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+          headers: {}
+      operationId: post-group
+      description: Create a new group
+      security:
+        - OAuth2: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the new group
+                email:
+                  type: string
+                  description: Email of the group
+              required:
+                - name
+                - email
+        description: ''
+    get:
+      summary: Get all groups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+              examples: {}
+          headers: {}
+      operationId: get-group
+      description: Get all groups in control
+      security:
+        - OAuth2: []
+      tags:
+        - Group
+    parameters: []
 components:
   schemas:
     Group:
